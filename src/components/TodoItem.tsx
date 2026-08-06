@@ -11,15 +11,15 @@ type TodoItemProps = {
 };
 
 const PRIORITY_STYLES = {
-  low: 'border-l-4 border-green-400',
-  medium: 'border-l-4 border-yellow-400',
-  high: 'border-l-4 border-red-400',
+  low: 'border-l-4 border-l-[var(--p-low)]',
+  medium: 'border-l-4 border-l-[var(--p-medium)]',
+  high: 'border-l-4 border-l-[var(--p-high)]',
 };
 
 const PRIORITY_BADGE = {
-  low: 'bg-green-100 text-green-700',
-  medium: 'bg-yellow-100 text-yellow-700',
-  high: 'bg-red-100 text-red-700',
+  low: 'bg-[var(--p-low-bg)] text-[var(--p-low-text)]',
+  medium: 'bg-[var(--p-medium-bg)] text-[var(--p-medium-text)]',
+  high: 'bg-[var(--p-high-bg)] text-[var(--p-high-text)]',
 };
 
 export default function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemProps) {
@@ -45,7 +45,7 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemP
   return (
     <li
       className={clsx(
-        'bg-white rounded-2xl shadow-sm px-4 py-3 flex items-center gap-3 group transition hover:shadow-md',
+        'group flex items-center gap-3 rounded-2xl border border-[var(--app-border)] bg-[var(--app-card)] px-4 py-3 shadow-sm transition hover:shadow-md',
         PRIORITY_STYLES[todo.priority]
       )}
     >
@@ -53,10 +53,10 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemP
       <button
         onClick={() => onToggle(todo.id)}
         className={clsx(
-          'w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition',
+          'flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full border-2 transition',
           todo.completed
-            ? 'bg-indigo-500 border-indigo-500 text-white'
-            : 'border-gray-300 hover:border-indigo-400'
+            ? 'border-[var(--app-accent)] bg-[var(--app-accent)] text-[var(--app-accent-fg)]'
+            : 'border-[var(--app-border)] hover:border-[var(--app-accent)]'
         )}
         aria-label="Toggle complete"
       >
@@ -64,28 +64,30 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemP
       </button>
 
       {/* Text or Edit Input */}
-      <div className="flex-1 min-w-0">
+      <div className="min-w-0 flex-1">
         {isEditing ? (
           <input
             autoFocus
             value={editText}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditText(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="w-full border border-indigo-300 rounded-lg px-2 py-1 text-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            className="w-full rounded-lg border border-[var(--app-accent)] bg-[var(--app-card)] px-2 py-1 text-sm text-[var(--app-text)] focus:ring-2 focus:ring-[var(--app-accent)] focus:outline-none"
           />
         ) : (
           <div className="flex items-center gap-2">
             <span
               className={clsx(
-                'text-sm font-medium truncate',
-                todo.completed ? 'line-through text-gray-400' : 'text-gray-800'
+                'truncate text-sm font-medium',
+                todo.completed
+                  ? 'text-[var(--app-muted)] line-through'
+                  : 'text-[var(--app-text)]'
               )}
             >
               {todo.text}
             </span>
             <span
               className={clsx(
-                'text-xs px-2 py-0.5 rounded-full font-semibold flex-shrink-0',
+                'flex-shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold',
                 PRIORITY_BADGE[todo.priority]
               )}
             >
@@ -96,19 +98,19 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemP
       </div>
 
       {/* Action Buttons */}
-      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition">
+      <div className="flex items-center gap-1 opacity-0 transition group-hover:opacity-100 focus-within:opacity-100">
         {isEditing ? (
           <>
             <button
               onClick={handleSave}
-              className="p-1.5 rounded-lg text-green-500 hover:bg-green-50 transition"
+              className="rounded-lg p-1.5 text-[var(--p-low-text)] transition hover:bg-[var(--app-soft)]"
               aria-label="Save"
             >
               <Save size={15} />
             </button>
             <button
               onClick={handleCancel}
-              className="p-1.5 rounded-lg text-gray-400 hover:bg-gray-100 transition"
+              className="rounded-lg p-1.5 text-[var(--app-muted)] transition hover:bg-[var(--app-soft)]"
               aria-label="Cancel"
             >
               <X size={15} />
@@ -118,14 +120,14 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemP
           <>
             <button
               onClick={() => setIsEditing(true)}
-              className="p-1.5 rounded-lg text-indigo-400 hover:bg-indigo-50 transition"
+              className="rounded-lg p-1.5 text-[var(--app-accent)] transition hover:bg-[var(--app-accent-soft)]"
               aria-label="Edit"
             >
               <Pencil size={15} />
             </button>
             <button
               onClick={() => onDelete(todo.id)}
-              className="p-1.5 rounded-lg text-red-400 hover:bg-red-50 transition"
+              className="rounded-lg p-1.5 text-[var(--p-high-text)] transition hover:bg-[var(--p-high-bg)]"
               aria-label="Delete"
             >
               <Trash2 size={15} />

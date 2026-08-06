@@ -10,23 +10,27 @@ export default function StatsBar({ activeCount, completedCount }: StatsBarProps)
   const percent = total === 0 ? 0 : Math.round((completedCount / total) * 100);
 
   return (
-    <div className="bg-white rounded-2xl shadow-md p-4 mb-4">
-      <div className="flex items-center justify-between mb-2">
+    <div className="mb-4 rounded-2xl border border-[var(--app-border)] bg-[var(--app-card)] p-4 shadow-md">
+      <div className="mb-2 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-1 text-sm text-gray-600">
-            <Circle size={15} className="text-indigo-400" />
-            <span><strong>{activeCount}</strong> remaining</span>
+          <div className="flex items-center gap-1 text-sm text-[var(--app-muted)]">
+            <Circle size={15} className="text-[var(--app-accent)]" />
+            <span>
+              <strong className="text-[var(--app-text)]">{activeCount}</strong> remaining
+            </span>
           </div>
-          <div className="flex items-center gap-1 text-sm text-gray-600">
-            <CheckCircle2 size={15} className="text-green-500" />
-            <span><strong>{completedCount}</strong> done</span>
+          <div className="flex items-center gap-1 text-sm text-[var(--app-muted)]">
+            <CheckCircle2 size={15} className="text-[var(--p-low)]" />
+            <span>
+              <strong className="text-[var(--app-text)]">{completedCount}</strong> done
+            </span>
           </div>
         </div>
-        <span className="text-sm font-bold text-indigo-500">{percent}%</span>
+        <span className="text-sm font-bold text-[var(--app-accent)]">{percent}%</span>
       </div>
-      <div className="w-full bg-gray-100 rounded-full h-2">
+      <div className="h-2 w-full rounded-full bg-[var(--app-soft)]">
         <div
-          className="bg-indigo-500 h-2 rounded-full transition-all duration-500"
+          className="h-2 rounded-full bg-[var(--app-accent)] transition-all duration-500"
           style={{ width: `${percent}%` }}
         />
       </div>

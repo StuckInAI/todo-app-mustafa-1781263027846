@@ -12,7 +12,7 @@ type TodoListProps = {
 export default function TodoList({ todos, onToggle, onDelete, onEdit }: TodoListProps) {
   if (todos.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-16 text-gray-400">
+      <div className="flex flex-col items-center justify-center py-16 text-[var(--app-muted)]">
         <ClipboardList size={48} className="mb-3 opacity-40" />
         <p className="text-lg font-medium">No tasks here!</p>
         <p className="text-sm">Add a task above to get started.</p>

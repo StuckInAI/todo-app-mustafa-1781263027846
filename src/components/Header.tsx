@@ -1,15 +1,29 @@
 import { CheckSquare } from 'lucide-react';
+import ThemeSwitcher from '@/components/ThemeSwitcher';
+import type { ThemeId } from '@/lib/themes';
 
-export default function Header() {
+type HeaderProps = {
+  theme: ThemeId;
+  setTheme: (theme: ThemeId) => void;
+};
+
+export default function Header({ theme, setTheme }: HeaderProps) {
   return (
-    <div className="text-center mb-8">
-      <div className="inline-flex items-center gap-3 mb-2">
-        <div className="bg-indigo-500 text-white p-2 rounded-xl shadow-lg">
-          <CheckSquare size={28} />
+    <div className="mb-8">
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <div className="rounded-xl bg-[var(--app-accent)] p-2 text-[var(--app-accent-fg)] shadow-lg">
+            <CheckSquare size={28} />
+          </div>
+          <div>
+            <h1 className="text-3xl font-extrabold tracking-tight text-[var(--app-text)] sm:text-4xl">
+              My To-Do
+            </h1>
+            <p className="text-sm text-[var(--app-muted)]">Stay organized, get things done.</p>
+          </div>
         </div>
-        <h1 className="text-4xl font-extrabold text-gray-800 tracking-tight">My To-Do</h1>
+        <ThemeSwitcher theme={theme} setTheme={setTheme} />
       </div>
-      <p className="text-gray-500 text-sm">Stay organized, get things done.</p>
     </div>
   );
 }

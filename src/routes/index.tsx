@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useTodos } from '@/hooks/useTodos';
+import { useTheme } from '@/hooks/useTheme';
 import Header from '@/components/Header';
 import AddTodoForm from '@/components/AddTodoForm';
 import FilterBar from '@/components/FilterBar';
@@ -23,11 +24,12 @@ function TodoPage() {
     activeCount,
     completedCount,
   } = useTodos();
+  const { theme, setTheme } = useTheme();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 py-10 px-4">
+    <div className="min-h-screen px-4 py-10">
       <div className="max-w-2xl mx-auto">
-        <Header />
+        <Header theme={theme} setTheme={setTheme} />
         <AddTodoForm onAdd={addTodo} />
         <StatsBar activeCount={activeCount} completedCount={completedCount} />
         <FilterBar
